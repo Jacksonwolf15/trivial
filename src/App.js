@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Button, Paper, Typography } from "@material-ui/core";
+import QueueAnim from 'rc-queue-anim';
 
 const he = require("he");
 
@@ -29,7 +30,15 @@ export default function App() {
 
   if (!submitted) {
     return (
-      <div>
+      <div 
+      style={{
+        minHeight: "100vh",
+        color: "white",
+        backgroundColor: "#282c34",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+      }}>
         <form
           onSubmit={handleSubmit}
           style={{
@@ -46,8 +55,9 @@ export default function App() {
             type="number"
             onChange={(e) => handleChange(e.target.value)}
           />
+          
 
-          <Button type="submit" variant="contained" color="primary">
+          <Button type="submit" variant="contained" color="secondary">
             Submit
           </Button>
         </form>
@@ -58,12 +68,17 @@ export default function App() {
   return (
     <div
       style={{
+        minHeight: "100vh",
+        justifyContent: "center",
+        color: "white",
+        backgroundColor: "#282c34",
         display: "flex",
         flexDirection: "column",
         alignItems: "center",
       }}
     >
-      <Typography variant="h4">Trivia Q's</Typography>
+      
+      <Typography variant="h4">Trivial</Typography>
 
       {questions.map((question) => (
         <Question
@@ -93,15 +108,23 @@ const Question = ({ questionText, correctAnswer, answers }) => {
   };
 
   return (
-    <Paper
+    <QueueAnim duration ="1000" type="right">
+    <Paper key = "demo"
       style={{
         textAlign: "center",
+        alignItems: "center",
         maxWidth: "40vw",
         padding: "10px",
-        margin: "20px",
+        margin: "10px",
+        
       }}
     >
-      <Typography variant="h6">{he.decode(questionText)}</Typography>
+      <h3 style={{
+        textAlign: "center",
+        fontWeight: '500',
+      }}>
+        {he.decode(questionText)}
+      </h3>
       <ul>
         {stateAnswers.map((answer) => {
           if (answered) {
@@ -109,7 +132,9 @@ const Question = ({ questionText, correctAnswer, answers }) => {
               <Button
                 variant="contained"
                 style={{
+                  alignContent: "center",
                   margin: "5px",
+                  left: "-20px",
                   backgroundColor:
                     answer === correctAnswer ? "#52cc49" : "#ff5959",
                 }}
@@ -123,8 +148,9 @@ const Question = ({ questionText, correctAnswer, answers }) => {
           return (
             <Button
               variant="contained"
-              color="primary"
-              style={{ margin: "5px" }}
+              color="secondary"
+              style={{ margin: "5px",
+              left: "-20px",}}
               onClick={handleClick}
             >
               {he.decode(answer)}
@@ -133,5 +159,6 @@ const Question = ({ questionText, correctAnswer, answers }) => {
         })}
       </ul>
     </Paper>
+    </QueueAnim>
   );
 };
